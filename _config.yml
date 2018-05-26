@@ -21,7 +21,7 @@ repository: mcace/mcace.github.io # ex. DONGChuan/DONGChuan.github.io
 # The base hostname & protocol for your site
 # For local test, please use http://localhost:4000
 # For production, use your github page url. ex. http://dongchuan.github.io
-url: http://mcace.github.io
+url: http://mcace.me
 
 ## Gem
 gems:
@@ -41,14 +41,21 @@ source:      .
 destination: ./_site
 
 quiet:    false
-defaults: []
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
 
 kramdown:
   input: GFM
   enable_coderay: true
 
 # Disque
-disque: my_disque_settings # ex. httpdongchuangithubio.disqus.com
+#disque: my_disque_settings # ex. httpdongchuangithubio.disqus.com
 
 # Pagination
 paginate: 10

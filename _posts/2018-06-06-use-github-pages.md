@@ -40,8 +40,12 @@ Github Pages可以构建两种站点：用户/组织页面或项目页面，它�
 
 Github规定，我们建立一个名称类似username.github.io的项目仓库时，该仓库会自动成为用户页面的仓库，我们上传到这个仓库里的静态页面就可以通过username.github.io来进行访问（这里的username是你的帐户名）。
 这里是我的账号：
+
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image.png)
+
 因此我需要建立一个名为mcace.github.io的仓库：
+
+![](http://mcace.me/assets/images/2018/use-github-pages/Image1.png)
 
 进入创建仓库的界面，下图中“根据喜好”表示的是可选填的内容，另外仓库虽然是可以私有的，但Github Pages相关的页面会公开在互联网，所以个人、组织站点的仓库是没有必要私有的：
 

@@ -402,5 +402,5 @@ ymal头插入（Rake）
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image42.png)  
 在点击Save按钮后，Github Pages会自动在仓库根目录下生成一个CNAME文件，内容为我们配置的域名，有的教程会教你自己建立这个文件，也是没有问题的。  
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image44.png)  
-一般来说我们配置的DNS要过一小会才能生效，Github Pages的帮助页面表示有可能会需要一天的时间，但我等了几分钟之后，就可以通过[http://mcace.me](http://mcace.me/)来访问了，同时访问[http://mcace.github.io](http://mcace.github.io/)时也会自动跳转到mcace.me。
+一般来说我们配置的DNS要过一小会才能生效，Github Pages的帮助页面表示有可能会需要一天的时间，但我等了几分钟之后，就可以通过[http://mcace.me](http://mcace.me/)来访问了，同时访问[http://mcace.github.io](http://mcace.github.io/)时也会自动跳转到mcace.me。  
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image43.png)  

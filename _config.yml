@@ -65,23 +65,23 @@ paginate_path: 'page:num'
 navs:
   -
     href: /
-    label: Home
+    label: 首页
 
   -
     href: /open-source
-    label: Open-Source
-
-  -
-    href: /blog
-    label: Blog
+    label: 我的码
 
   -
     href: /bookmark
     label: Bookmark
 
   -
+    href: /blog
+    label: 博文
+
+  -
     href: /about
-    label: About
+    label: 我
 
 # Sidebar to show popular repo
 side_bar_repo_limit: 5 # Number of repos to show

@@ -6,7 +6,7 @@ categories: github github-pages
 tags: [github-pages]
 ---
 
-本文将介绍在GoDaddy上购买域名后，配置到Github Pages的方法。
+本文将介绍在GoDaddy上购买域名后，配置到Github Pages的方法。  
 
 我已经在 [GoDaddy](https://sg.godaddy.com/zh)上购买了mcace.me的域名。首先登录 [GoDaddy](https://sg.godaddy.com/zh)，到后台配置DNS处：  
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image36.png)  

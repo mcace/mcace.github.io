@@ -546,7 +546,7 @@ echo _site > .gitignore
 #### Markdown Editing在Windows下的一些操作：
 
 >Ctrl+Alt+V：粘贴一个内嵌链接，如果选中了一段文字粘贴则自动设为链接文字，一般是复制一段链接然后使用该快捷键  
->Ctrl+1-6：添加标题，从小到大，文字比一般文字大一些，如果选中了一段文字则自动设置该段文字
+>Ctrl+1-6：添加标题，从小到大，文字比一般文字大一些，如果选中了一段文字则自动设置该段文字  
 >Shift+Win+K：粘贴一个内嵌图片，一般是复制一张图片的链接然后使用该快捷键  
 >Alt+B/I： __加粗__ 一段文字  
 
@@ -613,18 +613,14 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 1. Alt+N -> B，或者在菜单的[首选项]下，选择[浏览插件目录]（我安装了中文插件）。
 2. 找到目录`SublimeTmpl\templates`，可以看到里面有几个预置的模板文件了。
 3. 新建文件`md_blog.tmpl`，使用文本编辑器打开
-4. 添加如下内容
-```
----
-layout: post
-title:  
-date:   ${date}
-categories: 
-tags: []
----
-
-```
-
+4. 添加如下内容    
+> \---  
+> layout: post  
+> title:    
+> date:   ${date}  
+> categories:   
+> tags: []  
+> \---
 5. 回到上一级目录，找到`Main.sublime-menu`文件，打开编辑，文件内容是json格式的，找到id为`sublimetmpl`的节点，在`children`数组格式内容中添加如下内容（其中caption是显示在菜单中的内容，type是模板的文件名）：
 ```
 {
@@ -636,7 +632,6 @@ tags: []
     }
 }
 ```
-
 修改后内容如图：  
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image46.png)
 6. 修改完成后，在菜单中就可以看到我们设置的模板了，点击后就是我们设置的模板：    

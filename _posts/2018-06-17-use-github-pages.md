@@ -624,6 +624,7 @@ tags: []
 ---
 
 ```
+
 5. 回到上一级目录，找到`Main.sublime-menu`文件，打开编辑，文件内容是json格式的，找到id为`sublimetmpl`的节点，在`children`数组格式内容中添加如下内容（其中caption是显示在菜单中的内容，type是模板的文件名）：
 ```
 {

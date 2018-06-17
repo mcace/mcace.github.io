@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "使用GitHub Pages和Jekyll搭建自己的博客"
-date:   2018-06-08 00:54:35 +0200
+title: 使用GitHub Pages和Jekyll搭建自己的博客
+date:   2018-06-17 21:24:35 +0800
 categories: github github-pages jekyll
 tags: [jekyll,github-pages]
 ---
@@ -376,31 +376,142 @@ echo _site > .gitignore
 
 首先修改一下about.html，把里面的“blablabla”改成你想说的话。  
 然后修改一下_config.yml，其中最下面以skill_为开头的几个配置，是about页面的个人技能几个栏位的展示文字。  
+模板修改暂时就只写这么多了，因为都是前端的东西，所以我这里暂时不研究了，如果你希望能进一步个性化站点，可以自己探索一下。
+
+## 九、编辑、发布文章
+
+现在我们已经有一套博客了，下面就是最重要的写文章部分了，在markdown文本编辑环境中我选择了[Sublime Text 3](https://www.sublimetext.com/3)+Markdown Editing插件，Sublime Text 3是一款免费的本文编辑器，支持安装多种插件，我也用过同类型的Notepad++，但始终觉得Sublime Text界面更加友好，插件更易用。  
+
+#### 安装Markdown Editing插件  
+
+首先Sublime Text 3在安装插件之前，要安装[Package Control](https://packagecontrol.io/installation)插件，这个插件可以用于安装各种Sublime Text的插件。    
+打开Sublime Text 3，按Ctrl+`呼出控制台，输入下面这行命令后回车:
 
 
-## 九、发布文章
-sublime + markdown editing  
-图片问题  
-markdown语法  
-上传到github看效果  
-ymal头插入（Rake）  
+> import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+
+稍等片刻，控制台会给出一串数字，这时重启Sublime Text 3即可。   
+
+重启后按Ctrl+Alt+P打开包管理界面，在文本框中输入"pcip"，如果Package Controller被正确安装则会显示"Package Control： Install Package"，这时按下回车即可进入包安装界面（可能要稍微等一会才弹出），输入"Markdown Editing"即可找到插件，按回车即可进行安装。    
+
+但不知什么原因，我的Package Control找不到Markdown Editing，因此这里再介绍另一种安装Sublime Text插件的方法： 
+首先在这里下载[Markdown Editing](https://github.com/SublimeText-Markdown/MarkdownEditing/archive/master.zip)的官方打包。 
+下载完成后用“解压到当前文件夹”进行解压缩，然后将"MarkdownEditing-master"文件夹改名为"MarkdownEditing"，再移动到Sublime Text 3的插件目录下，插件目录可以通过在Sublime Text 3下按Alt+N -> 按B来找到。  
+这时重启Sublime Text 3，按Ctrl+Alt+P打开包管理界面，输入"Markdown Editing"即可找到该插件。
+
+Markdown Editing在Windows下的一些操作：  
+>Ctrl+Alt+V：粘贴一个内嵌链接，如果选中了一段文字粘贴则自动设为链接文字，一般是复制一段链接然后使用该快捷键  
+>Ctrl+1-6：添加标题，从小到大，文字比一般文字大一些，如果选中了一段文字则自动设置该段文字
+>Shift+Win+K：粘贴一个内嵌图片，一般是复制一张图片的链接然后使用该快捷键  
+>Alt+B/I： __加粗__ 一段文字  
+
+#### 同时我再介绍一些Markdown语法
+
+-   首先是最重要的换行，在段落内换行时，单纯的回车换行是不行的，必须在第一行末尾处增加至少两个空格才能实现换行。  
+-   如果想实现两段文字中产生分段的效果，只要在两行文字中空一行即可实现。 
+-   接着是和本段文字类似的列表，在列表每项前增加"-"、"+"或"*"再接三个空格即可。
+-   如果需要带数字的列表，则可以使用'1.'接一个空格来创建。
+-   如果需要输入代码，那么可以在代码首尾两行用四个空格或'\`\`\`'包围即可，使用'\`\`\`'包围代码时，可以在首行的'\```'后指定代码格式进行高亮，比如'```java'，但是代码能不能高亮要看markdown支持的实际情况。
+-   如果要输入一段引用内容，可以使用'>'再接文字，比如下面这段就是`>测试文本`输入的。
+   >测试文本
+
+关于插入图片，我这里用Github仓库来存图片，文章内的图片使用了绝对地址来引用，步骤如下：
+
+1. 将图片放在仓库内的`assets\images\2018\use-github-pages`目录下。
+2. 在文章内插入图片链接，格式为`http://mcace.me/assets/images/2018/use-github-pages/图片名`
+
+当然很多人会很介意这种Github的使用方式，所以如果你有靠谱的图床，也可以外链到图床来插入图片。
+
+#### 下面是上传到github看效果的时候了，步骤如下：
+
+1. 在文章头部添加下面这段yaml头信息，用于Jekyll生成页面
+```
+---
+layout: post
+title: 使用GitHub Pages和Jekyll搭建自己的博客
+date:   2018-06-08 00:54:35 +0200
+categories: github github-pages jekyll
+tags: [jekyll,github-pages]
+---
+```
+2. 将本文命名为`2018-06-06-use-github-pages.md`，放在`_posts`目录下  
+3. 将图片文件放在`assets\images\2018\use-github-pages`目录下  
+4. 上传文件到Github仓库里
+5. 稍等片刻，页面生成完成后在自己的Github Pages页面查看文章
+
+__注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
+
+到这里基本上接完成了Github Pages博客站的初步工作了，我们只要写好Markdown文本，放在_posts目录下再上传即可完成博文的写作和分享了！    
+
+但是每一篇Markdown文本我们都要添加yaml头信息才能让Jekyll自动生成对应的Html页面，这是很麻烦的一件事情，下面我们简单地了解一下yaml头信息，以及使用SublimeTmpl构造模板实现yaml头的自动插入。
+
+#### yaml头信息，SublimeTmpl实现日志模板
+
+上述的yaml头信息表示了文章使用的模板、标题、创建日期、日志分类及标签，这些都是用于Jekyll生成静态站点及相关HTML的信息，并且这里的 配置都可以在我们定义的模板页面中获取，以便用于生成自定义页面，如果你感兴趣可以看一看`_layouts\post.html`页面的内容，这是Yummy-Jekyll作者自制的内容。
+
+在Sublime Text下使用SublimeTmpl这个插件可以通过自定义模板来创建自带yaml头信息的文本，这样我们就不需要每次都手动去添加这些内容，首先来看插件的安装：
+
+1. 在Sublime Text 3中按Ctrl+Alt+P打开包管理界面，输入pcip按回车，等待包安装界面弹出。
+2. 在包安装界面输入SublimeTmpl，选择插件并回车或左键单击安装。
+3. 安装完成后，查看菜单栏的[文件] /[File]下是否存在[New File(SublimeTmpl)]选项，如果没有就重启Sublime Text 3再看。
+
+安装成功后如图：  
+![](http://mcace.me/assets/images/2018/use-github-pages/Image45.png)
+
+下面我们来添加模板文件：    
+
+1. Alt+N -> B，或者在菜单的[首选项]下，选择[浏览插件目录]（我安装了中文插件）。
+2. 找到目录`SublimeTmpl\templates`，可以看到里面有几个预置的模板文件了。
+3. 新建文件`md_blog.tmpl`，使用文本编辑器打开
+4. 添加如下内容
+```
+---
+layout: post
+title:  
+date:   ${date}
+categories: 
+tags: []
+---
+
+```
+5. 回到上一级目录，找到`Main.sublime-menu`文件，打开编辑，文件内容是json格式的，找到id为`sublimetmpl`的节点，在`children`数组格式内容中添加如下内容（其中caption是显示在菜单中的内容，type是模板的文件名）：
+```
+{
+    "id": "md_blog",
+    "caption": "md_blog",
+    "command": "sublime_tmpl",
+    "args": {
+        "type": "md_blog"
+    }
+}
+```
+修改后内容如图：  
+![](http://mcace.me/assets/images/2018/use-github-pages/Image46.png)
+6. 修改完成后，在菜单中就可以看到我们设置的模板了，点击后就是我们设置的模板：    
+![](http://mcace.me/assets/images/2018/use-github-pages/Image47.png)
+7. 为了不使Jekyll在生成站点时因为时间设置导致错误，我们必须在生成的时间中添加时区信息，在插件目录中找到`SublimeTmpl.sublime-settings`文件，在`date_format`节点数据末尾添加" +0800"，如图：
+![](http://mcace.me/assets/images/2018/use-github-pages/Image48.png)
+
+到这里基本上就完成了模板的创建，另外关于SublimeTmpl的使用主要是参考博文：[Sublime Text tmpl插件快速生成md文件YAML头](http://www.shaoguoji.cn/2016/02/20/Sublime_Text_pakage_generate_md_file_YAML_head_information/)，这里还提供了设置创建新文件的快捷键的方法，你可以参考一下。
+
+#### 博文预览
+
+通过在Sublime Text 3中安装MarkdownPreview插件可以实现博文的预览，通过Package Control安装插件的过程不再赘述，这里仅介绍我经常使用的方式：
+
+1. Alt+P打开网页预览博文
+2. 博文更新后保存，刷新对应网页即可实现内容更新
 
 
-## 十、配置域名到Github Pages
+#### 现在创建新文件并开始写博客的方式也就基本固定了：
 
-我已经在 [GoDaddy](https://sg.godaddy.com/zh)上购买了mcace.me的域名。首先登录 [GoDaddy](https://sg.godaddy.com/zh)，到后台配置DNS处：  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image36.png)  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image37.png)  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image38.png)  
-添加A记录，及一条CNAME记录，其中“名称”对应配置里的“主机”，“值”对应配置里的“指向”。这里A记录主机为@，表示当前域名即mcace.me，CNAME记录表示类似xx.mcace.me，这里配置的www表示为通过www.mcace.me访问时，会指向当前域名，用@表示。这样配置之后通过mcace.me或www.mcace.me都可以访问到我的博客。具体配置类似下图。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image40.png)  
-其中A记录的IP在[GitHub Pages帮助页面](https://help.github.com/articles/setting-up-an-apex-domain/)查看，如下图，你配置时可以看一下IP地址有没有变动。 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image39.png)  
-有的教程会教你创建两个CNAME记录，分别为从@和www指向你个人页面地址，goDaddy不允许添加@主机到CNAME中，因为会影响该域名下其他的类似邮件等功能，因此这里我研究了半天得出了使用A记录来提交到DNS的办法。A记录必须指向一个固定的IP，CNAME可以指向一个域名，看起来CNAME更灵活一点，但实际上正确的用法是A记录配置的是example.com这个裸域(naked domain / root domain)的记录，而CNAME记录配置的是类似www.example.com的子域名的记录。  
-这里配置完成后，来到Github的个人页面仓库，进入Settings标签下，找到Github Pages区域，将我们的域名配置进去，并点Save按钮：  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image41.png)  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image42.png)  
-在点击Save按钮后，Github Pages会自动在仓库根目录下生成一个CNAME文件，内容为我们配置的域名，有的教程会教你自己建立这个文件，也是没有问题的。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image44.png)  
-一般来说我们配置的DNS要过一小会才能生效，Github Pages的帮助页面表示有可能会需要一天的时间，但我等了几分钟之后，就可以通过[http://mcace.me](http://mcace.me/)来访问了，同时访问[http://mcace.github.io](http://mcace.github.io/)时也会自动跳转到mcace.me。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image43.png)  
+1. 通过模板创建文件
+2. 配置title,catagory,tags
+3. 开始写博文
+4. 如果有图片，则通过各种方法得到图片的外链，然后插入博文中
+5. 通过MarkdownPreview插件预览效果，如有必要可以在本地运行Jekyll查看全站
+6. 保存博文，文件名格式为[yyyy-mm-dd-title.md]，上传到Github仓库
+7. 在Github Pages站点欣赏自己的大作
+
+
+###### 至此，整篇文章也就算结束了吧，其中肯定会有不足之处，还望大家多多包含，不吝赐教，另外也请关注我的另一篇Github Pages博客相关的博文：[配置域名到Github Pages](http://mcace.me/github/github-pages/jekyll/2018/06/17/use-domain-for-github-pages.html)，该文以GoDaddy上购买的域名配置到Github Pages博客页面为例介绍域名配置。
+##### 最后非常感谢您的阅读！

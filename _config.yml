@@ -72,10 +72,6 @@ navs:
     label: 我的码
 
   -
-    href: /bookmark
-    label: Bookmark
-
-  -
     href: /blog
     label: 博文
 

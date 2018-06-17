@@ -5,7 +5,7 @@ css: ['index.css', 'sidebar-popular-repo.css']
 ---
 <section class="jumbotron">
     <div class="container">
-        <h1>{{ site.title }}</h1>
+        <h1>{% if site.subtitle %}{{ site.subtitle }}{% else %}{{ site.title }}{% endif %}</h1>
         <div id="jumbotron-meta-info">
             {% if site.location %}
             <span class="meta-info">
@@ -21,7 +21,12 @@ css: ['index.css', 'sidebar-popular-repo.css']
             <span class="meta-info hvr-grow">
                 <span class="octicon octicon-mark-github"></span>
                 <a href="{{ site.github_url }}" target="_blank">@{{ site.github_username }}</a>
-            </span> {% endif %}
+            </span> <br/>{% endif %}  
+            {% for nav in site.front-page-subtitle-navs %}       
+            <span class="meta-info hvr-grow">
+                <a href="{{ nav.href }}" target="_blank">{{ nav.label }}</a>
+            </span>
+            {% endfor %}
         </div>
     </div>
 </section>

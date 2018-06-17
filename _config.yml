@@ -7,6 +7,7 @@
 
 # Site settings
 title: 画中世界 # ex. I m Chuan
+subtitle: 用技术绘出缤纷世界
 name: McAce # ex. DONGChuan
 email: n0tmc8ce@gmail.com
 #location: My location # ex. Nice, France
@@ -78,6 +79,12 @@ navs:
   -
     href: /about
     label: 我
+
+front-page-subtitle-navs:
+  -
+    href: /github/github-pages/jekyll/2018/06/17/use-github-pages.html
+    label: Jekyll&Github Pages搭建博客
+
 
 # Sidebar to show popular repo
 side_bar_repo_limit: 5 # Number of repos to show

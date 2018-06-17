@@ -512,6 +512,7 @@ tags: []
 6. 保存博文，文件名格式为[yyyy-mm-dd-title.md]，上传到Github仓库
 7. 在Github Pages站点欣赏自己的大作
 
+__另外需要注意：博文第一行会作为预览显示在博客网站的博文目录里，所以大家第一句一定要简单概括一下文章内容，不要上来就一整段主要内容！。__
 
 ###### 至此，整篇文章也就算结束了吧，其中肯定会有不足之处，还望大家多多包含，不吝赐教，另外也请关注我的另一篇Github Pages博客相关的博文：[配置域名到Github Pages](http://mcace.me/github/github-pages/jekyll/2018/06/17/use-domain-for-github-pages.html)，该文以GoDaddy上购买的域名配置到Github Pages博客页面为例介绍域名配置。
 ##### 最后非常感谢您的阅读！

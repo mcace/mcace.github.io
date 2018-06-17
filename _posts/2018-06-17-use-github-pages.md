@@ -635,6 +635,7 @@ tags: []
     }
 }
 ```
+
 修改后内容如图：  
 ![](http://mcace.me/assets/images/2018/use-github-pages/Image46.png)
 6. 修改完成后，在菜单中就可以看到我们设置的模板了，点击后就是我们设置的模板：    

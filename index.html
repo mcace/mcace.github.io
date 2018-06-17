@@ -24,7 +24,7 @@ css: ['index.css', 'sidebar-popular-repo.css']
             </span> <br/>{% endif %}  
             {% for nav in site.front-page-subtitle-navs %}       
             <span class="meta-info hvr-grow">
-                <a href="{{ nav.href }}" target="_blank">{{ nav.label }}</a>
+                <a href="{{ nav.href }}" target="{{ nav.target | default: _self }}">{{ nav.label }}</a>
             </span>
             {% endfor %}
         </div>

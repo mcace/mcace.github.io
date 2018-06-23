@@ -50,6 +50,7 @@ Spring-Boot是Pivotal团队贡献的全新后端Java开发框架，它主要整�
 
 1. 打开pom.xml
 2. 在`<dependencies>`内添加如下内容：  
+
    ```xml
    <dependency>
        <groupId>org.springframework.boot</groupId>
@@ -82,7 +83,8 @@ public class HelloController {
 本节使用MockMvc发送Http请求，来验证接口正常：
 
 1. 在src\test\java目录下的添加一个HelloControllerTest.java文件，使用IDEA可以将光标放在HelloController类里的类名上，然后按Alt+Enter，选择Create Test来自动生成测试类。
-2. 测试类内容如下：    
+2. 测试类内容如下：
+
    ```java
    @RunWith(SpringRunner.class)
    @SpringBootTest
@@ -104,12 +106,15 @@ public class HelloController {
 
    }
    ```
-3. 在import区引入静态方法，很多教程都没有写这一步，但是我本机实践下来不写是找不到上面的get()、status()等静态方法的。    
+
+3. 在import区引入静态方法，很多教程都没有写这一步，但是我本机实践下来不写是找不到上面的get()、status()等静态方法的。
+
    ```java  
    import static org.hamcrest.CoreMatchers.equalTo;
    import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
    import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
    ```
+
 4. 运行测试类或测试方法，查看有无异常，这一步之后，可以将静态字符串`Hello World`改成其他不同字符串，运行测试类查看有无异常，来看看测试出异常时会是什么样的效果。
 
 

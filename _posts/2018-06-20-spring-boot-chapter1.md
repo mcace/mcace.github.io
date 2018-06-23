@@ -118,4 +118,4 @@ public class HelloController {
 4. 运行测试类或测试方法，查看有无异常，这一步之后，可以将静态字符串`Hello World`改成其他不同字符串，运行测试类查看有无异常，来看看测试出异常时会是什么样的效果。
 
 
-###### 到这里，Spring-Boot应用基本就入门了，本章我们简单地构建了一个提供返回`Hello World`字符串的Http协议接口方法，这个过程中如果你曾经用过Spring+Spring MVC，就一定能感受到这个过程有多方便快捷，在后面的学习中，我将继续深入Spring-Boot的实践及原理解析。
+###### 到这里，Spring-Boot应用基本就入门了，本章我们简单地构建了一个提供返回`Hello World`字符串的Http协议接口方法，如果你曾经用过Spring+Spring MVC，就一定能感受到这个过程有多方便快捷，在后面的学习中，我将继续深入Spring-Boot的实践及原理解析。

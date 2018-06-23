@@ -49,7 +49,7 @@ Spring-Boot是Pivotal团队贡献的全新后端Java开发框架，它主要整�
 因为我们在构建时没有选定spring-web模块，因此当前的项目还不能直接使用spring-mvc，Maven项目按照如下步骤添加spring-web模块：
 
 1. 打开pom.xml
-2. 在<dependencies>内添加如下内容：
+2. 在```<dependencies>```内添加如下内容：
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>

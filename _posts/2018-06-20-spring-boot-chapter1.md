@@ -6,6 +6,8 @@ categories: spring spring-boot
 tags: [spring,spring-boot,spring-boot学习笔记]
 ---
 
+## 导言
+
 Spring-Boot是Pivotal团队贡献的全新后端Java开发框架，它主要整合了Spring、Spring MVC及各种第三方框架，并且以“约定大于配置”的思想，解决了以往Spring开发中需要面对大量配置文件的状况。
 
 使用Spring-Boot，我们以往需要配置的application.xml、web.xml等都可以省略了，框架会自动帮我们引入类似<component-scan>、Spring Listener及Dispatch Servlet等配置，因为这些都是约定好的，极少需要变动的配置。

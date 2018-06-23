@@ -33,7 +33,8 @@ public static void main(String[] args) {
 ```
 3. 列表项3
 
-实际上这么写是错误的，虽然在Sublime Text 3的插件Markdown Preview中可以正常显示，但经过Github Pages的Jekyll生成的静态页面就会出现错误
+实际上这么写是错误的，虽然在Sublime Text 3的插件Markdown Preview中可以正常显示，但经过Github Pages的Jekyll生成的静态页面就会出现错误。  
+(好像在Github Pages里这段显示又正常了，但是事实是这么写很不稳定，经常会莫名其妙地出格式错误)
 
 ##### 要解决这个问题很简单，正确的写法是：
 
@@ -69,4 +70,5 @@ public static void main(String[] args) {
 1. 列表项中，代码块插到哪个条目里时，当该条目首行缩进了x个字符时，代码块就要缩进x个字符。
 2. 列表项中，代码块前后要有空行。
 
-这个问题的根源是由于Jekyll 3默认使用rouge作为markdown代码高亮器，，并且Github Pages自2016年1月起只支持kramdown + rouge的组合，因此我们写作在Github Pages上的markdown文本必须遵循rouge的语法，也是很蛋疼了，并且Sublime Text 3的MarkdownPreview插件在对这种类型的列表进行预览时，代码块所在条目的下一条目会从起始数字开始而不是继续下去，这应该是MarkdownPreview的markdown引擎问题，有空我要研究一下怎么修改。
+这个问题的根源是由于Jekyll 3默认使用rouge作为markdown代码高亮器，，并且Github Pages自2016年1月起只支持kramdown + rouge的组合，因此我们写作在Github Pages上的markdown文本必须遵循rouge的语法，也是很蛋疼了。  
+并且Sublime Text 3的MarkdownPreview插件在对这种类型的列表进行预览时，代码块所在条目的下一条目会从起始数字开始而不是继续下去，这应该是MarkdownPreview的markdown引擎问题，有空我要研究一下怎么修改。

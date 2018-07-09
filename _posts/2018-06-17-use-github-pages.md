@@ -614,13 +614,13 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 2. 找到目录`SublimeTmpl\templates`，可以看到里面有几个预置的模板文件了。
 3. 新建文件`md_blog.tmpl`，使用文本编辑器打开
 4. 添加如下内容    
-> \---  
+> \-\-\-  
 > layout: post  
 > title:    
 > date:   ${date}  
 > categories:   
 > tags: []  
-> \---
+> \-\-\-
 5. 回到上一级目录，找到`Main.sublime-menu`文件，打开编辑，文件内容是json格式的，找到id为`sublimetmpl`的节点，在`children`数组格式内容中添加如下内容（其中caption是显示在菜单中的内容，type是模板的文件名）：
 ```
 {

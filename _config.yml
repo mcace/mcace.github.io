@@ -80,10 +80,10 @@ navs:
     href: /about
     label: 我
 
-front-page-subtitle-navs:
-  -
-    href: /github/github-pages/jekyll/2018/06/17/use-github-pages.html
-    label: Jekyll&Github Pages搭建博客
+#front-page-subtitle-navs:
+#  -
+#    href: /github/github-pages/jekyll/2018/06/17/use-github-pages.html
+#    label: Jekyll&Github Pages搭建博客
 
 
 # Sidebar to show popular repo

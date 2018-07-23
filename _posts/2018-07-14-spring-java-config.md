@@ -30,7 +30,9 @@ _此外，与配置有关的注解还有@Import、@ImportSource、@ComponentScan
 
 #### [@Configuration](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Configuration.html)
 
-@Configuration只能标记在类上，表示该类为JavaConfig类，使其内部定义为@Bean的方法可以被Spring IOC容器识别并将相关的Bean加入到容器中。也就是相当于以往的一个xml文件。
+@Configuration只能标记在类上，表示该类为JavaConfig类，使其可以被Spring IOC容器扫描识别并创建Bean加入到容器中。
+
+@Configuration类就相当于以往的一个xml文件。
 
 下面是一个Configuration注解官方文档的例子：
 
@@ -57,13 +59,13 @@ public class AppConfig{
 
 需要注意的是，Spring规定了几条使用@Configuration注解类的约束，这些约束多半是由于Spring要使用AOP来增强Configuration类所引起的，不过我个人觉得实践中会出现这些问题的情况几乎很少吧：
 
-1. Configuration类必须以类的方式提供，比如不能是通过工厂方法返回的实例，这样在运行时框架可以通过创建其子类来实现增强功能。
+1. Configuration类必须以类的方式提供，比如不能是通过工厂方法返回的实例，这样在运行时框架可以通过创建其子类来实现AOP增强功能。
 2. Configuration类不能被标记为final。
 3. Configuration类不能是局部类(本地类，英文为local class)，比如代码块里的局域内部类。
 4. 嵌套的configuration类必须被定义为static类型。
 5. @Bean方法不能返回一个Configuration类的实例，如果你这么做了，那么它只是按照一个正常的bean被返回，Configuration类内部的配置相关注解如@Bean是无法被识别处理的。
 
-@Configuration本身也是一个复合的注解，它还整合了@Component，也就是说它可以被Component-Scan识别，并以一个Bean的形式由Spring IOC容器托管，当然在大部分情况下开发者并不会需要使用这个bean，但也因此我们可以使用@Autowired注解、构造器注入等方式实现对该JavaConfig类的依赖注入。
+@Configuration本身也是一个复合的注解，它还整合了@Component，也就是说它可以被Component-Scan识别，并以一个Bean的形式由Spring IOC容器托管，当然在大部分情况下开发者并不会需要使用这个bean，但也因此我们可以利用注解扫描的方式式来控制Spring容器处理这些JavaConfig类，实现依赖注入、@Bean方法扫描等功能。
 
 #### [@Bean](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Bean.html)
 
@@ -92,9 +94,9 @@ public MyBean3 myBean3(){
 }
 ```
 
-Spring容器会自动将依赖的bean注入，在这里的注入就类似于构造器注入了，当然我们也可以在代码实现set方法注入，和以往的用代码创建Bean是一致的。
+Spring容器会自动将依赖的bean注入，在这里的注入`new MyBean2(myBean)`就是构造器注入了，我们也可以在new出来对象后，使用set方法注入，这和以往的创建Bean时的几种依赖注入方式是一致的。
 
-你可能注意到创建MyBean3时，是调用了同类里的其他@Bean方法，在这种情况下，Spring会利用CGLIB实现的AOP，在调用方法前到IOC容器里去找到对应的myBean2并返回。因此在创建MyBean3时，它被注入的myBean2是IOC容器里的myBean2，而非直接调用myBean2()方法，同时由于Bean默认的Scope是singleton，因此myBean2被注入时也以单例形式注入，如果你不太明白，那么可以看看下面这个例子：
+你可能注意到创建MyBean3时，是调用了同@Configuration类里的其他@Bean方法，在这种情况下，Spring会利用CGLIB实现的AOP，在调用方法前到IOC容器里去找到对应的myBean2并返回。因此在创建MyBean3时，它被注入的myBean2是IOC容器里的myBean2，而非直接调用myBean2()方法，同时由于Bean默认的Scope是singleton，因此myBean2被注入时也以单例形式注入，如果你不太明白，那么可以看看下面这个例子：
 
 ```java
 @Configuration
@@ -122,7 +124,9 @@ public class AppConfig {
 
 在该例中，clientService1()和clientService2()方法都调用了clientDao()方法，并且clientDao()方法是被@Bean标注的方法，因此被注入到clientService1和clientService2的clientDao此时指向的同一个bean对象。
 
-同时@Bean并不一定非要标记在@Configuration类里，当标记在普通的类的方法上时，Spring容器会使用精简模式来加载bean，此时调用其他@Bean方法只是普通的方法调用，而非通过AOP方式进行依赖注入，并且由于没有@Configuration注解，该类无法通过扫描的方式装配bean，必须手动注册到ApplicationContext中才能装配bean。
+你可能注意到了我前面强调了“同@Configuration类里的其他@Bean方法”，你可能会想@Bean能不能放在没有@Configuration标记的类的方法上，实际上确实是有这种用法的。
+
+@Bean并不一定非要标记在@Configuration类里，当标记在普通的类的方法上时，Spring容器会使用精简模式来创建Bean，此时调用其他@Bean方法只是普通的方法调用，而非通过AOP方式进行依赖注入，并且由于没有@Configuration注解，该类无法通过扫描的方式装配bean，必须手动注册到ApplicationContext中才能装配bean。
 
 #### [AnnotationConfigApplicationContext](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/AnnotationConfigApplicationContext.html)
 
@@ -205,7 +209,7 @@ public class Chapter2s1Application {
 }
 ```
 
-其中AppConfig.class就是前面在讲注解时，使用@Configuration和@Bean配合使用来替代applicationContext.xml内容的JavaConfig类，至于内容大家可以参照前面的使用方法随便写。
+其中AppConfig.class就是前面在讲注解时，使用@Configuration和@Bean配合使用来替代applicationContext.xml内容的JavaConfig类。
 
 如果非要写一个与之相对使用appConfig.xml作为配置的ClassPathXmlApplicationContext来作为对比，那么内容也是类似的：
 
@@ -217,7 +221,13 @@ public class Chapter2s1Application {
 }
 ```
 
-当然你可能会想，既然ACAC提供了注册、扫描的功能，那么我在xml里使用`<context:component-scan base-package="..."/>`或是定义好AppConfig的bean然后使用`<context:annotation-config/>`，然后使用ClassPathXmlApplicationContext来启动是不是也一样？没错，这种用法是没有任何问题的，并且JavaConfig还可以作为xml配置的补充存在，比如下面的两段xml配置，是可以处理@Configuration标记的JavaConfig类，并根据@Bean注解方法装配Bean的：
+当然你可能会想，既然ACAC提供了扫描包的功能，那么我还是用AppConfig类来配置框架，但使用ClassPathXmlApplicationContext来替代ACAC启动，同时在xml里使用扫描功能
+
+```xml
+<context:component-scan base-package="AppConfig类所在包"/>
+```
+
+或是写一个AppConfig类的Bean定义，加上使用`<context:annotation-config/>`开启注解扫描
 
 ```xml
 <beans>
@@ -226,13 +236,7 @@ public class Chapter2s1Application {
 </beans>
 ```
 
-```xml
-<beans>
-    <conetext:component-scan base-package="AppConfig所在包"/>
-</beans>
-```
-
-这里的用法就是xml结合JavaConfig，同时对框架进行配置，在后面我会详细地介绍这些内容。
+结果是不是也一样？答案是这种用法没有任何问题，它是JavaConfig作为xml配置补充的实现方式之一。JavaConfig配合xml文件对框架进行配置的内容，在后面我会详细地介绍。
 
 另外，我们观察到在调用register()和scan()方法后，代码都使用了refresh()方法来刷新，refresh()方法主要是进行所有bean工厂的预处理、创建等工作，由于ACAC继承的org.springframework.context.support.GenericApplicationContext不支持多次多次调用refresh()方法，因此多次调用refresh()时是会报错的，如下代码：
 

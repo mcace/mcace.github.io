@@ -530,18 +530,197 @@ java -Dspring.profiles.active="p1,p2" ... 程序名
 1. 如果没有设置启用的配置名，则默认配置名为"default"，此时标为"default"和没有@Profile注解的配置会被启用。
 2. 如果配置名前加了叹号'!'，则表示当指定的配置名没有启用时，则启用该配置。比如@Profile({"p1","!p2"})，当指定配置名为p1或配置名p2没有启用时，该配置就会被启用。
 
-@Conditional
+#### [@Conditional](https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/javadoc-api/org/springframework/context/annotation/Conditional.html)
 
-@Scope
+@Conditional允许在通过注解创建bean时，增加验证创建条件的功能，以此来控制一个bean是否真正被创建。
 
+@Conditional有三种用法：1.标记在类上；2.标记在方法上；3.和其他注解整合。
+
+@Conditional注解只有一个强制属性`java.lang.Class<? extends Condition>[]   value`，也就是要传入一个或多个`Condition`接口实现类的类对象。
+
+@Conditional需要和[Condition](https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/javadoc-api/org/springframework/context/annotation/Condition.html)接口配合使用才能实现bean创建的控制。
+
+实现[Condition](https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/javadoc-api/org/springframework/context/annotation/Condition.html)接口需要实现方法`boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata)`，该方法用于通过注解创建bean时控制是否进行创建，方法返回为true时则允许创建，为false时则不允许创建。
+
+matches()方法的两个参数在Spring处理注解时会传入，其中[ConditionContext](https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/javadoc-api/org/springframework/context/annotation/ConditionContext.html)对象可以视为一个专门用于Condition实现类的ApplicationContext对象，通过它可以获取到Spring框架运行的多种具体构成，它主要提供了下面这几种方法：
+
+```java
+BeanDefinitionRegistry getRegistry();
+@Nullable
+ConfigurableListableBeanFactory getBeanFactory();
+Environment getEnvironment();
+ResourceLoader getResourceLoader();
+@Nullable
+ClassLoader getClassLoader();
+```
+
+举个例子，我们可以通过getEnvironment()方法来获取到项目运行参数，前面的@Profile就是利用了这个方法来获取spring.profiles.active的参数，后面我会详细说明。
+
+而[AnnotatedTypeMetadata](https://docs.spring.io/spring-framework/docs/5.0.7.RELEASE/javadoc-api/org/springframework/core/type/AnnotatedTypeMetadata.html)对象则可以用于获取被@Conditional标记的类或方法的注解集合，它主要提供了下面这几种方法：
+
+```java
+boolean isAnnotated(String annotationName);
+@Nullable
+Map<String, Object> getAnnotationAttributes(String annotationName);
+@Nullable
+Map<String, Object> getAnnotationAttributes(String annotationName, boolean classValuesAsString);
+@Nullable
+MultiValueMap<String, Object> getAllAnnotationAttributes(String annotationName);
+@Nullable
+MultiValueMap<String, Object> getAllAnnotationAttributes(String annotationName, boolean classValuesAsString);
+```
+
+在下面的例子里，我们要使用ACAC来创建一个UserService类的bean，由于ACAC的方法都是基于注解的，因此通过ACAC创建bean是受到@Conditional注解控制的，我们模仿@Profile的做法，设定一个名为"condition.mc"的JVM参数，当他为"1"时创建则UserService的bean，下面我们看看具体的代码：
+
+首先实现一个Condition接口
+
+```java
+public class UserServiceCondition implements Condition {
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        Environment env = context.getEnvironment();
+        String conditionMC = env.getProperty("condition.mc");
+        return "1".equals(conditionMC);
+    }
+}
+```
+
+接着实现UserService，并将@Service、@Conditional注解标记上去，这里我们为了验证bean创建成功，就只是简单地覆盖toString()方法
+
+```java
+@Service
+@Conditional(UserServiceCondition.class)
+public class UserService {
+
+    @Override
+    public String toString() {
+        return "userService bean created";
+    }
+}
+```
+
+最后我们在程序入口处使用ACAC来创建bean（使用ClassPathXmlApplicationContext，并使用注解扫描式创建bean也没问题，只要保证bean是通过注解式创建就行）
+
+```java
+public class conditionalApplication {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(UserService.class);
+        
+        UserService userService = (UserService) context.getBean("userService");
+
+        System.out.println(userService);
+    }
+}
+```
+
+此时运行，会提示` No bean named 'userService' available`，接着我们增加一个JVM参数`-Dcondition.mc=1`，控制台打印`userService bean created`，我们的Conditional注解使用成功。
+
+注意@Conditional只能在通过注解创建bean时才会生效，如果是xml文件里
+
+```xml
+<beans>
+    <bean id = "userService" class = "com.mcsoft.service.UserService"/>
+</beans>
+```
+
+这种情况@Conditional是无法生效的，因为这种创建bean的方式是完全和注解无关的。
+
+实际上，前面提到过，@Profile注解就是通过整合@Conditional来实现启用配置的功能，见其源码：
+
+```java
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Conditional(ProfileCondition.class)
+public @interface Profile {
+
+    /**
+     * The set of profiles for which the annotated component should be registered.
+     */
+    String[] value();
+
+}
+```
+
+可以看到@Conditional指定了一个ProfileCondition.class的参数，而ProfileCondition类的源码如下：
+
+```java
+class ProfileCondition implements Condition {
+
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        MultiValueMap<String, Object> attrs = metadata.getAllAnnotationAttributes(Profile.class.getName());
+        if (attrs != null) {
+            for (Object value : attrs.get("value")) {
+                if (context.getEnvironment().acceptsProfiles((String[]) value)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
+}
+```
+
+我们可以看到代码中先是获取了@Profile注解的value属性值，然后利用Environment实现类中提供的acceptsProfiles((String[]) value)方法来校验参数与`spring.profiles.active`设定的值是否匹配，校验结果影响着最后bean是否进行创建。因此通过@Profile注解配合`spring.profiles.active`参数来启用不同配置，实际上是利用了@Conditional和Condition接口来实现的。
+
+#### [@Scope](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Scope.html)、[@Lazy](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Lazy.html)、[@DependsOn](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/DependsOn.html)、[@Primary](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Primary.html)
+
+这几个注解放在一起说，因为他们都是创建bean时使用的注解，可以配合@Bean注解来控制bean创建，也就是过去在xml配置的项：
+
+```xml
+<bean id="userService" class="com.mcsoft.service.UserServiceImpl"
+      scope="prototype"
+      depends-on="user1"
+      lazy-init="true"
+      primary="true" >
+    <property name="user" ref="user1"/>
+</bean>
+```
+
+就相当于下面的@Bean方法：
+
+```java
+@Bean
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@DependsOn("user1")
 @Lazy
-
-@DependsOn
-
 @Primary
+public UserService userService() {
+    UserService service = new UserServiceImpl();
+    service.setUser(user1());
+    return service;
+}
+```
 
-@Order
+它们也可以标记在类上，和@Component、@Service、@Controller、@Configuration这样的注解共同使用，来控制bean创建。
 
+所以上面的例子又相当于下面这个类：
+
+```java
+@Service
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@DependsOn("user1")
+@Lazy
+@Primary
+public class UserServiceImpl implements UserService{
+    @Autowire
+    private User user1;
+}
+```
+
+在被扫描创建bean时，这几个注解会控制创建时的行为。
+
+简述一下这几个注解的行为：
+
+- Scope：定义获取bean时，bean工厂是返回单例对象(singleton)，还是每次都返回新对象(prototype)，web项目中使用WebApplicationContext时还可以设定为"session"及"request"，表示每个新session创建一个新bean，或是每个新请求创建一个新bean。
+- DependsOn：如果我们创建一个bean时，需要保证另一个bean一定已经被创建，就可以使用该注解指定那个bean的name。这个和依赖注入时差不多，容器在依赖注入时会保证被注入的bean先创建好再注入，但这个配置可以指定非该bean创建过程中要显式注入的bean。
+- Lazy：延迟加载控制，用于控制Scope为singleton的bean创建时机，默认为true，Spring容器在启动时不会创建bean，而是在第一次使用时创建，注解在@Configuration类上时，所有内部的@Bean方法都会设为延迟加载。但如果一个非延迟化的singleton bean依赖一个延迟化的singleton bean时，容器也会忽视延迟加载，直接创建bean。
+- Primary：依赖注入使用byType策略时，如果被注入的接口有多个实现类的bean，容器根据byType无法确定要注入接口的哪个实现类的bean，这时可以用@Primary标记其中一个实现类，这样注入时就会优先注入该类。
+
+#### [@Order](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/annotation/Order.html)
 
 ## AnnotationConfigWebApplicationContext介绍
 

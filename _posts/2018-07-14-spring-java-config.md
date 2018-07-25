@@ -8,23 +8,23 @@ tags: [spring,spring-framework,spring-core]
 
 本文将介绍Spring 3.0后一种新的配置方式：JavaConfig，使用这种配置方式，既可以作为xml配置的补充，使xml配置精简化，也可以完全替代xml配置，实现无xml配置项目。
 
-本文将先介绍这种新功能的实现方法，再动手实现一个无xml配置(包括web.xml)的Web项目。
-
 同时Spring-Boot就是通过JavaConfig来实现“约定大于配置”的功能，因此学习一下JavaConfig方式对于理解Spring-Boot加载配置的方式也是很有必要的。
 
 ## JavaConfig:Spring 3.0的新功能
 
-从Spring3.0开始，一个新的@Configuration注解被添加进框架，使用该注解可以快速标识一个类成为Java Class配置类，官方称这种方式为JavaConfig，这种方式旨在使用Java类对Spring框架进行配置，实现bean定义等功能，是xml配置文件的一种替代或协同工作的形式。
+我们知道，Spring容器运行时，需要有一个提供Bean定义的载体，在3.0前，这个载体主要是xml配置文件，而从Spring 3.0开始，一个新的@Configuration注解被添加进框架，使用该注解可以快速标识一个类成为Spring的Java Class配置类，官方称这种方式为JavaConfig，这种方式旨在使用Java类对Spring框架进行配置，提供Bean定义，是xml配置文件的一种替代或协同工作的形式。
 
 也就是说使用JavaConfig，其各个功能都是可以在原本的xml配置里找到对应的。
 
-配合新的基于注解的AnnotationConfigApplicationContext，可以实现将xml配置转移到代码中的特性，这种配置方式既可以完全替代xml配置，也可以和xml配置相结合，使xml配置更加精简化。
+JavaConfig主要通过注解来实现Bean定义，配合新的基于注解的AnnotationConfigApplicationContext，可以实现将xml配置转移到代码中的特性，这种配置方式既可以完全替代xml配置，也可以和xml配置相结合，使xml配置更加精简化。
+
+现在Spring中定义一个Bean，我们就有了三种方式：1.xml配置中使用`<bean/>`；2.使用@Component等注解配合注解扫描；3.使用JavaConfig配合@Configuration、@Bean注解。
 
 ## 新的JavaConfig注解和基于注解的ApplicationContext介绍
 
 从Spring3.0开始，新增的与JavaConfig有关的注解主要为@Configuration、@Bean，新增的ApplicationContext主要为AnnotationConfigApplicationContext。
 
-_此外，与配置有关的注解还有@Import、@ImportSource、@ComponentScan、@Profile、@Conditional、@Scope、@Lazy、@DependsOn、@Primary、@Order，这里既有4.0后新的注解，也有2.5前就已经存在的注解，同时Spring3.0中新增了一个AnnotationConfigWebApplicationContext，作为一个新的Web项目ApplicationContext被添加进框架，后面我会一一介绍它们的。_
+_此外，与配置有关的注解还有@Import、@ImportSource、@ComponentScan、@Profile、@Conditional、@Scope、@Lazy、@DependsOn、@Primary，这里既有4.0后新的注解，也有2.5前就已经存在的注解，同时Spring3.0中新增了一个AnnotationConfigWebApplicationContext，作为一个新的Web项目ApplicationContext被添加进框架，后面我会一一介绍它们的。_
 
 本节先来介绍一下主要注解和新的AnnotationConfigApplicationContext的功能，注意本文在撰写时是以Spring当前版本`5.0.7 Release`为准，相关文档可以在[Java-based container configuration](https://docs.spring.io/spring/docs/5.0.7.RELEASE/spring-framework-reference/core.html#beans-java)找到，同时每小段的标题都附上了current（最新正式）版本api的连接，如果想了解更多细节，可以点进去阅读，如果新版本Spring api文档与下面的内容有出入，请根据你使用的Spring版本来决定内容的可靠性。
 
@@ -267,7 +267,7 @@ public class Chapter2s1Application {
 
 ## 与JavaConfig紧密相关的其他注解
 
-与配置有关的注解还有@Import、@ImportSource、@ComponentScan、@Profile、@Conditional、@Scope、@Lazy、@DependsOn、@Primary、@Order，这里会一一介绍它们，可能会有遗漏，如果未来学到了会再补充的。
+与配置有关的注解还有@Import、@ImportSource、@ComponentScan、@Profile、@Conditional、@Scope、@Lazy、@DependsOn、@Primary，这里会一一介绍它们，可能会有遗漏，如果未来学到了会再补充的。
 
 #### [@Import](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/context/annotation/Import.html)
 
@@ -720,14 +720,152 @@ public class UserServiceImpl implements UserService{
 - Lazy：延迟加载控制，用于控制Scope为singleton的bean创建时机，默认为true，Spring容器在启动时不会创建bean，而是在第一次使用时创建，注解在@Configuration类上时，所有内部的@Bean方法都会设为延迟加载。但如果一个非延迟化的singleton bean依赖一个延迟化的singleton bean时，容器也会忽视延迟加载，直接创建bean。
 - Primary：依赖注入使用byType策略时，如果被注入的接口有多个实现类的bean，容器根据byType无法确定要注入接口的哪个实现类的bean，这时可以用@Primary标记其中一个实现类，这样注入时就会优先注入该类。
 
-#### [@Order](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/annotation/Order.html)
-
 ## AnnotationConfigWebApplicationContext介绍
 
-## 四种配置形式
 
-JavaConfig-centric Xml-centric full-JavaConfig full-xml
 
-## 一个简单的无xml化Web项目
+## JavaConfig和xml配置结合的两种形式
 
-JavaConfig实例
+现在我们的项目除了完全使用JavaConfig、完全使用xml配置外，还可以实现JavaConfig结合xml对Spring进行配置，而这种形式又分为以JavaConfig为中心及以xml配置为中心两种形式。
+
+首先我们定义一个User类，拿他来创建Bean
+
+```java
+public class User {
+    private String name;
+
+    public User() {
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{name='" + name + "\'}";
+    }
+}
+```
+
+接着我们定义JavaConfig和xml配置
+
+```java
+@Configuration
+//@ImportResource("classpath:applicationContext.xml")
+public class AppConfig {
+    @Bean
+    public User user1() {
+        return new User("u1");
+    }
+
+    @Bean
+    public User user2() {
+        return new User("u2");
+    }
+}
+```
+
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--<context:annotation-config/>-->
+    <!--<bean class="com.mcsoft.config.AppConfig"/>-->
+
+    <bean id="user3" class="com.mcsoft.bean.User">
+        <constructor-arg name="name" value="u3"/>
+    </bean>
+
+</beans>
+```
+
+#### JavaConfig-centric
+
+以JavaConfig为中心时，我们主要使用@ImportResource注解来引入xml配置，将AppConfig类中的`//@ImportResource("classpath:applicationContext.xml")`注释取消，接着使用ACAC来启动程序
+
+```java
+public class JavaConfigCentricApp {
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        User user1 = (User) context.getBean("user1");
+        System.out.println(user1);
+
+        User user2 = (User) context.getBean("user2");
+        System.out.println(user2);
+
+        User user3 = (User) context.getBean("user3");
+        System.out.println(user3);
+    }
+}
+```
+
+控制台正确打印：
+
+```
+User{name='u1'}
+User{name='u2'}
+User{name='u3'}
+```
+
+#### Xml-centirc
+
+以Xml配置为中心时，我们主要通过xml配置注解式创建bean来使@Configuration类生效，这里有两种方式：1.定义JavaConfig类的bean，然后使用`<context:annotation-config/>`开启注解扫描；2.使用`<context:component-scan/>`来扫描@Configuration类。
+
+这里我们用第一种方式实现，首先将xml配置里的`<context:annotation-config/>`和`<bean class="com.mcsoft.config.AppConfig"/>`注释取消，接着使用ClassPathXmlApplicationContext来启动项目
+
+```java
+public class XmlConfigCentricApp {
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext" +
+                ".xml");
+
+        User user1 = (User) context.getBean("user1");
+        System.out.println(user1);
+
+        User user2 = (User) context.getBean("user2");
+        System.out.println(user2);
+
+        User user3 = (User) context.getBean("user3");
+        System.out.println(user3);
+    }
+}
+```
+
+控制台正确打印：
+
+```
+User{name='u1'}
+User{name='u2'}
+User{name='u3'}
+```
+
+## 总结
+
+Spring 3.0 在原本的xml配置bean、注解式配置Bean基础上，增加了使用Java类配置bean的方式，它实际上还是通过注解式来实现的，但在控制Bean生产上粒度更加细致，可以在代码里由开发者控制一个Bean生产的过程。
+
+本文主要讲述了通过使用JavaConfig提供Bean定义，供Spring容器创建Bean的方式。
+
+实质上，无论是注解式还是xml配置，本质上都是一种提供Bean定义的载体，但由于形式不同，他们也各自拥有各自的特性。
+
+下面我摘抄一段《Spring 3.X 企业应用开发实战》中，133页的表格，该表格对比了三种配置方式，并提供了三种方式使用场景的参考意见。
+
+| |基于XML配置|基于注解配置|基于Java类配置|
+-|----------|-----------|-------------
+Bean定义|在XML文件中通过`<bean/>`元素定义。如：`<bean class="com.bbt.UserDao"/>`|在Bean实现类通过注解@Component或衍型类（如@Service、@Controller或@Repository）来定义Bean|在标注了@Configuration的Java类中，通过在类方法上标注@Bean定义一个Bean。方法必须提供Bean实例化逻辑
+Bean名称|通过`<bean>`的`id`或`name`属性定义，如：`<bean id="userDao" class="com.bbt.UserDao"/>`，默认名称为：`com.bbt.UserDao#0`|通过注解的value属性定义，如`@Component("userDao")`。默认名称为小写字母开头的类名（不带包名）：`userDao`|通过@Bean的name属性定义，如`@Bean("userDao")`，默认名称为方法名
+Bean注入|通过`<property>`子元素进行set注入或通过p命名空间的动态属性，如`<bean class="com.bbt.UserService" p:userDao-ref="userDao">`，或通过`<constructor-arg>`进行构造器注入|通过在成员变量或方法入参处标注`@Autowired`，按类型匹配自动注入，还可以配合`@Qualifier`按名称匹配方式注入|比较灵活，可以通过在方法处使用`@Autowired`使方法入参绑定Bean，然后在方法中通过代码进行注入，还可以通过调用配置类的@Bean方法进行注入
+Bean全部生命过程方法|通过`<bean/>`的`init-method`和`destory-method`属性指定Bean实现类的方面名。最多只能指定一个初始化方法和一个销毁方法|通过在目标方法上标注`@PostConstruct`和`@PreDestory`注解指定初始化和销毁方法，可以定义任意多个方法|通过`@Bean`的`initMethod`或`destoryMethod`属性指定一个初始化或销毁方法。对于初始化方法，还可以直接在方法内部通过代码的方式灵活定义初始化逻辑。
+Bean作用范围|通过`<bean/>`的`scope`指定，如`<bean class="com.bbt.UserDao" scope="prototype"/>`|通过在类定义处标注`@Scope`指定，如`@Scope("prototype")`|通过在Bean方法定义处标注`@Scope`指定
+Bean延迟初始化|通过`<bean/>`的`lazy-init`属性指定，默认为default，继承于`<beans/>`的`default-lazy-init`设置，该值默认为`false`|通过在类定义处标注`@Lazy`指定，如`@Lazy(true)`，注解的默认值为`true`|通过在Bean方法上标注`@Lazy`指定
+适合场景|1) Bean实现类来源于第三方类库，因无法在类中标记注解，通过XML配置较好；2) 命名空间的配置，如aop、context等，只能使用xml配置|Bean的实现类是当前项目开发的，可以直接在Java类中使用基于注解的配置|基于Java类配置的优势在于可以通过代码方式控制Bean初始化的整体逻辑。所以如果实例化Bean的逻辑比较复杂，则比较适合使用基于Java类配置的方式

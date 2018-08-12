@@ -7,9 +7,10 @@ tags: [java,java-core,java-core-serialize]
 ---
 Java反序列化漏洞：
 
-来自博客：
+来自文章：
 - [序列化和反序列化漏洞的简单理解](https://blog.csdn.net/jameson_/article/details/73826384)
 - [java反序列化漏洞原理研习](https://www.cnblogs.com/KevinGeorge/p/8448967.html)
+- [Java反序列化漏洞详解](https://www.secpulse.com/archives/42126.html)
 
 ##### 原理：
 
@@ -35,3 +36,5 @@ Java有一个类AnnotationInvocationHandler（和注解处理有关，对本文�
 这个漏洞要求目标开放一个反序列化的网络接口（或是其他可以传入数据进行反序列化的方式），并且使用Apache Common Collections，并且有触发setValue的方案（上面用了Java的AnnotationInvocationHandler类，实际上还有别的方案）。
 
 它结合了Java反射调用方法、远程传输数据执行方法，不需要在目标服务器有任何权限，只要满足条件就能控制目标机器。
+
+简单来看，危害还是挺大的，因为现在的RPC框架、以及Java的RMI在网络上传输对象数据都是依赖序列化的，如果恰好使用了Apache的Collections库，并且这些接口公开暴露在互联网上，那还是很危险的。

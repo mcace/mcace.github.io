@@ -31,7 +31,7 @@ Java线程有多种状态，状态之间的转换也是有多种方式，本文�
 4. wait()方法的注释上有这么一段
 
    ```java
-   * A thread can also wake up without being notified, interrupted, or
+   /* A thread can also wake up without being notified, interrupted, or
    * timing out, a so-called <i>spurious wakeup</i>.  While this will rarely
    * occur in practice, applications must guard against it by testing for
    * the condition that should have caused the thread to be awakened, and
@@ -47,7 +47,7 @@ Java线程有多种状态，状态之间的转换也是有多种方式，本文�
    * (For more information on this topic, see Section 3.2.3 in Doug Lea's
    * "Concurrent Programming in Java (Second Edition)" (Addison-Wesley,
    * 2000), or Item 50 in Joshua Bloch's "Effective Java Programming
-   * Language Guide" (Addison-Wesley, 2001).
+   * Language Guide" (Addison-Wesley, 2001).*/
    ```
 
    表明线程也可能在特殊情况下苏醒，因此比较好的实践经验是用while(条件不符合)来包住wait()方法。我自己暂时没有在实践里见过别人这么写的，所以是见仁见智的一个提示。

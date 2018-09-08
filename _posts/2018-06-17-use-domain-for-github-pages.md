@@ -2,7 +2,7 @@
 layout: post
 title: 配置域名到Github Pages
 date:   2018-06-17 15:27:35 +0200
-categories: github github-pages
+categories: github-pages 建站
 tags: [github-pages]
 ---
 

@@ -2,8 +2,8 @@
 layout: post
 title:  初尝Spring-Boot
 date:   2018-06-20 20:47:11 +0800
-categories: spring spring-boot
-tags: [spring,spring-boot,spring-boot学习笔记]
+categories: spring-boot
+tags: [spring-boot]
 ---
 
 ## 导言

@@ -2,7 +2,7 @@
 layout: post
 title: 使用JavaConfig形式配置Spring框架，了解一下
 date: 2018-07-14 21:29:33 +0800
-categories: spring-framework spring-core
+categories: spring-core
 tags: [spring,spring-framework,spring-core]
 ---
 
@@ -722,7 +722,7 @@ public class UserServiceImpl implements UserService{
 
 ## AnnotationConfigWebApplicationContext介绍
 
-
+Spring中，ApplicationContext的实现既可以作为框架启动器存在，也可以和应用的部署形式相结合，，在XML时代，
 
 ## JavaConfig和xml配置结合的两种形式
 

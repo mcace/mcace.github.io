@@ -2,8 +2,8 @@
 layout: post
 title: 图解Java线程状态转换
 date: 2018-08-24 20:28:49 +0800
-categories: java java-core java-core-concurrent
-tags: [java,java-core,java-core-concurrent]
+categories: Java并发
+tags: [Java并发]
 ---
 
 Java线程有多种状态，状态之间的转换也是有多种方式，本文用图解方式来说明Java线程状态转换的过程。

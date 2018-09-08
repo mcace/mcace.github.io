@@ -2,8 +2,8 @@
 layout: post
 title:  数据结构1-绪论
 date:   2018-06-24 22:19:30 +0800
-categories: data-structure
-tags: [data-structure]
+categories: 数据结构
+tags: [数据结构]
 ---
 
 从今天起更新一套数据结构学习笔记。

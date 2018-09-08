@@ -2,8 +2,8 @@
 layout: post
 title: Java序列化数据分析
 date: 2018-08-12 19:03:34 +0800
-categories: java java-core java-core-serialize
-tags: [java,java-core,java-core-serialize]
+categories: Java序列化
+tags: [Java序列化]
 ---
 学习Java序列化时，对Java实现的序列化数据存储格式感兴趣，简单了解了一下。
 

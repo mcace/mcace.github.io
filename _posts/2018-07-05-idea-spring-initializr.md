@@ -2,8 +2,8 @@
 layout: post
 title: 使用Idea的Spring Initializr快速创建spring-boot项目
 date: 2018-07-05 14:18:52 +0800
-categories: spring spring-boot
-tags: [spring,spring-boot,spring-boot学习笔记]
+categories: spring-boot Idea
+tags: [spring-boot]
 ---
 
 文本将介绍使用Idea内嵌的Spring Initializr工具快速创建一个Spring-Boot项目。

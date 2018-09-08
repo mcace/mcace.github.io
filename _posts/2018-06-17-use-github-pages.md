@@ -2,7 +2,7 @@
 layout: post
 title: 使用GitHub Pages和Jekyll搭建自己的博客
 date:   2018-06-17 21:24:35 +0800
-categories: github github-pages jekyll
+categories: github-pages jekyll
 tags: [jekyll,github-pages]
 ---
 
@@ -534,14 +534,14 @@ echo _site > .gitignore
 
 稍等片刻，控制台会给出一串数字，这时重启Sublime Text 3即可。   
 
-重启后按Ctrl+Alt+P打开包管理界面，在文本框中输入"pcip"，如果Package Controller被正确安装则会显示"Package Control： Install Package"，这时按下回车即可进入包安装界面（可能要稍微等一会才弹出），输入"Markdown Editing"即可找到插件，按回车即可进行安装。    
+重启后按Ctrl+Shift+P打开包管理界面，在文本框中输入"pcip"，如果Package Controller被正确安装则会显示"Package Control： Install Package"，这时按下回车即可进入包安装界面（可能要稍微等一会才弹出），输入"Markdown Editing"即可找到插件，按回车即可进行安装。    
 
 但不知什么原因，我的Package Control找不到Markdown Editing，因此这里再介绍另一种安装Sublime Text插件的方法： 
 首先在这里下载[Markdown Editing](https://github.com/SublimeText-Markdown/MarkdownEditing/archive/master.zip)的官方打包。 
 
 下载完成后用“解压到当前文件夹”进行解压缩，然后将"MarkdownEditing-master"文件夹改名为"MarkdownEditing"，再移动到Sublime Text 3的插件目录下，插件目录可以通过在Sublime Text 3下按Alt+N -> B来找到。  
 
-这时重启Sublime Text 3，按Ctrl+Alt+P打开包管理界面，输入"Markdown Editing"即可找到该插件。
+这时重启Sublime Text 3，按Ctrl+Shift+P打开包管理界面，输入"Markdown Editing"即可找到该插件。
 
 #### Markdown Editing在Windows下的一些操作：
 
@@ -601,7 +601,7 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 
 在Sublime Text下使用SublimeTmpl这个插件可以通过自定义模板来创建自带yaml头信息的文本，这样我们就不需要每次都手动去添加这些内容，首先来看插件的安装：
 
-1. 在Sublime Text 3中按Ctrl+Alt+P打开包管理界面，输入pcip按回车，等待包安装界面弹出。
+1. 在Sublime Text 3中按Ctrl+Shift+P打开包管理界面，输入pcip按回车，等待包安装界面弹出。
 2. 在包安装界面输入SublimeTmpl，选择插件并回车或左键单击安装。
 3. 安装完成后，查看菜单栏的[文件] /[File]下是否存在[New File(SublimeTmpl)]选项，如果没有就重启Sublime Text 3再看。
 
@@ -661,5 +661,5 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 
 __另外需要注意：博文第一行会作为预览显示在博客网站的博文目录里，所以大家第一句一定要简单概括一下文章内容，不要上来就一整段主要内容！__
 
-###### 至此，整篇文章也就算结束了吧，其中肯定会有不足之处，还望大家多多包含，不吝赐教，另外也请关注我的另一篇Github Pages博客相关的博文：[配置域名到Github Pages](http://mcace.me/github/github-pages/2018/06/17/use-domain-for-github-pages.html)，该文以GoDaddy上购买的域名配置到Github Pages博客页面为例介绍域名配置。
+###### 至此，整篇文章也就算结束了吧，其中肯定会有不足之处，还望大家多多包含，不吝赐教，另外也请关注我的另一篇Github Pages博客相关的博文：[配置域名到Github Pages](http://mcace.me/github-pages/建站/2018/06/17/use-domain-for-github-pages.html)，该文以GoDaddy上购买的域名配置到Github Pages博客页面为例介绍域名配置。
 ##### 最后非常感谢您的阅读！

@@ -2,7 +2,7 @@
 layout: post
 title:  在Github Pages中让列表内的代码块也支持高亮
 date:   2018-06-23 18:35:15 +0800
-categories: github github-pages jekyll
+categories: github-pages jekyll
 tags: [github-pages,jekyll,markdown,kramdown]
 ---
 

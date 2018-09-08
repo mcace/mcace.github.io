@@ -2,8 +2,8 @@
 layout: post
 title: 简单了解Java反序列化漏洞
 date: 2018-08-12 21:18:38 +0800
-categories: java java-core java-core-serialize
-tags: [java,java-core,java-core-serialize]
+categories: Java序列化
+tags: [Java序列化]
 ---
 Java反序列化漏洞：
 

@@ -716,7 +716,7 @@ public class UserServiceImpl implements UserService{
 简述一下这几个注解的行为：
 
 - Scope：定义获取bean时，bean工厂是返回单例对象(singleton)，还是每次都返回新对象(prototype)，web项目中使用WebApplicationContext时还可以设定为"session"及"request"，表示每个新session创建一个新bean，或是每个新请求创建一个新bean。
-- DependsOn：如果我们创建一个bean时，需要保证另一个bean一定已经被创建，就可以使用该注解指定那个bean的name。这个和依赖注入时差不多，容器在依赖注入时会保证被注入的bean先创建好再注入，但这个配置可以指定非该bean创建过程中要显式注入的bean。
+- DependsOn：如果我们创建一个bean时，需要保证另一个bean一定已经被创建，就可以使用该注解指定那个bean的name。这个和依赖注入时差不多，容器在依赖注入时会保证被注入的bean先创建好再注入，但这个配置可以指定依赖注入以外的bean。
 - Lazy：延迟加载控制，用于控制Scope为singleton的bean创建时机，默认为true，Spring容器在启动时不会创建bean，而是在第一次使用时创建，注解在@Configuration类上时，所有内部的@Bean方法都会设为延迟加载。但如果一个非延迟化的singleton bean依赖一个延迟化的singleton bean时，容器也会忽视延迟加载，直接创建bean。
 - Primary：依赖注入使用byType策略时，如果被注入的接口有多个实现类的bean，容器根据byType无法确定要注入接口的哪个实现类的bean，这时可以用@Primary标记其中一个实现类，这样注入时就会优先注入该类。
 

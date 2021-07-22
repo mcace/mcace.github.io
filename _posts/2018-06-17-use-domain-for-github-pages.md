@@ -12,21 +12,21 @@ tags: [github-pages]
 
 1:
 
-![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image36.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image36.png)  
 
 2:
 
-![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image37.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image37.png)  
 
 3:进入DNS管理界面
 
-![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image38.png) 
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image38.png) 
 
 这里是我配置好的结果，初见可能不是这样的，可以清空后添加四条A记录及一条CNAME记录。
 
 首先我们先看如何配置，见下图
 
-![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image40.png) 
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image40.png) 
 
 DNS管理中的“名称”项对应这里的“主机”，“值”项对应这里的“指向”。“主机”是用来配置域名的，“值”表示访问这个域名时，指向哪个IP或域名。
 
@@ -36,7 +36,7 @@ DNS管理中，A记录“主机”为@，等于当前域名，即"mcace.me"，�
 
 其中A记录的IP在[GitHub Pages帮助页面](https://help.github.com/articles/setting-up-an-apex-domain/)查看，如下图，你配置时可以看一下IP地址有没有变动。
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image39.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image39.png)
 
 ---
 
@@ -46,14 +46,14 @@ DNS管理中，A记录“主机”为@，等于当前域名，即"mcace.me"，�
 
 这里配置完成后，来到Github的个人页面仓库，进入Settings标签下，找到Github Pages的Custom domain区域，将我们的域名配置进去，并点Save按钮（这里可以把Enforce HTTPS勾上，以后博客就必须通过HTTPS来访问，HTTP访问也会强制转为HTTPS）：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image41.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image41.png)
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image42.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image42.png)
 
 在点击Save按钮后，Github Pages会自动在仓库根目录下生成一个CNAME文件，内容为我们配置的域名，有的教程会教你自己建立这个文件，也是没有问题的。
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image44.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image44.png)
 
 至此整个配置就结束了，一般来说我们配置的DNS要过一小会才能生效，Github Pages的帮助页面表示有可能会需要一天的时间，但我等了几分钟之后，就可以通过[https://mcace.me](https://mcace.me/)来访问了，同时访问[https://mcace.github.io](https://mcace.github.io/)时也会自动跳转到mcace.me。
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image43.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image43.png)  

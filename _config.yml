@@ -22,7 +22,7 @@ repository: mcace/mcace.github.io # ex. DONGChuan/DONGChuan.github.io
 # The base hostname & protocol for your site
 # For local test, please use http://localhost:4000
 # For production, use your github page url. ex. http://dongchuan.github.io
-url: http://mcace.me
+url: http://mcace.github.io
 
 ## Gem
 gems:

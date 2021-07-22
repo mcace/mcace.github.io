@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://mirrors.tuna.tsinghua.edu.cn/rubygems/'
 
 gem 'json', github: 'flori/json', branch: 'v1.8'
 gem 'rough'

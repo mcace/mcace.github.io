@@ -12,21 +12,21 @@ tags: [github-pages]
 
 1:
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image36.png)  
+![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image36.png)  
 
 2:
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image37.png)  
+![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image37.png)  
 
 3:进入DNS管理界面
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image38.png) 
+![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image38.png) 
 
 这里是我配置好的结果，初见可能不是这样的，可以清空后添加四条A记录及一条CNAME记录。
 
 首先我们先看如何配置，见下图
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image40.png) 
+![](http://{{ site.url }}/assets/images/2018/use-github-pages/Image40.png) 
 
 DNS管理中的“名称”项对应这里的“主机”，“值”项对应这里的“指向”。“主机”是用来配置域名的，“值”表示访问这个域名时，指向哪个IP或域名。
 

@@ -51,39 +51,39 @@ Github规定，我们建立一个名称类似username.github.io的项目仓库�
 
 这里是我的账号：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image.png)  
 
 因此我需要建立一个名为mcace.github.io的仓库：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image2.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image2.png)  
 
 进入创建仓库的界面，下图中“根据喜好”表示的是可选填的内容，另外仓库虽然是可以私有的，但Github Pages相关的页面会公开在互联网，所以个人、组织站点的仓库是没有必要私有的： 
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image14.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image14.png)  
 
 下面就是创建好的博客仓库了  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image3.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image3.png)  
 
 在浏览器里输入[https://mcace.github.io/](https://mcace.github.io/)，进入的页面默认显示的是README.md的内容：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image4.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image4.png)  
 
 另外我们还可以选择一些Github Pages准备好的样式，首先选择仓库设置：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image5.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image5.png)  
 
 该界面向下拉，到Github Pages项，点击Choose a theme按钮：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image6.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image6.png)  
 
 在跳转的页面中，选择一个我们喜欢的主题，点击Select theme按钮应用主题：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image7.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image7.png)  
 
 稍等片刻后，会回到仓库并进入README.md文件的编辑界面，先不管他，再来看我们的主页，主题已经应用了：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image8.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image8.png)  
 
 这里的主题就是Github Pages通过Jekyll工具支持构建的一个静态页面，我们也可以在本地使用Jekyll构建好HTML页面再上传到仓库，关于Jekyll我们后面再细谈。  
 
@@ -97,25 +97,25 @@ Github规定，我们建立一个名称类似username.github.io的项目仓库�
 
 首先我们在本地任意位置建立一个文件夹，然后在终端进入该文件夹，使用git clone命令将Github上的仓库复制下来：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image9.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image9.png)  
 
 可以看到我的Github Pages仓库已经被拉下来了（这里的连接一定要改成你自己的仓库，可别拉我的仓库哦）：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image11.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image11.png)  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image10.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image10.png)  
 
 进入仓库目录后，我们先写一个首页，Github Pages默认会将index.html作为首页：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image12.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image12.png)  
 
 接下来使用add、commit、push命令将index.html上传到仓库的master分支下（这里报错是要求我登录一下）：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image15.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image15.png)  
 
 再访问我们的站点，主页就变为（这里我上传后立即访问时还是README.md的内容，稍微等了一会后才改变，应该是Github需要有一个构建跳转的过程）：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image13.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image13.png)  
 
 到这里，我们基本上了解并学会使用Github Pages了，现在我们可以在本地写好HTML静态页面，上传到Github Pages仓库，（假设上传的文件名为page.html）就可以使用username.github.io/page.html或username.github.io/page这样的链接来访问那个页面啦！
 
@@ -173,7 +173,7 @@ yum install git
 gem install bundler
 ```
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image16.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image16.png)  
 
 同时由于Yummy-Jekyll还用到了bower来管理前端插件，因此我们需要安装nodejs，并使用它的npm安装bower，这一步稍微有点麻烦，我的CentOS6.9需要添加yum源，这里我们使用NodeSource提供的安装方式，并安装当前稳定版本nodejs 8.x，如果你的系统不是CentOS 6.9，你可以尝试先安装nodejs，如果失败了再去搜索你的系统安装nodejs的方式。  
 
@@ -189,7 +189,7 @@ npm -v
 node -v
 ```
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image17.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image17.png)  
 
 然后安装bower，再使用命令来确认bower安装完成：  
 
@@ -198,19 +198,19 @@ npm install -g bower
 bower -v
 ```
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image18.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image18.png)  
 
 现在安装环境已经建立了，下面我们要做的是把Yummy-Jekyll部署到我们的Github Pages仓库里。
 
 首先我们使用fork将Yummy-Jekyll添加到我们自己的库中（不强制，直接clone下来也行）：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image19.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image19.png)  
 
 Github会提示我们正在forking，稍等一会，页面就会自动跳转到我们fork下来的库中，这时这个项目当前的代码就存在于我们自己的库里了。  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image20.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image20.png)  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image21.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image21.png)  
 
 接下来在本地找到合适的位置，使用git clone命令，将fork下来的代码整个拉下来，记得把URL修改成你自己的哦，不要拉我的仓库，拉下来后会自动创建文件夹Yummy-Jekyll，我这里是虚拟机共享目录blog里拉代码的。  
 
@@ -264,7 +264,7 @@ git push -u origin master
 
 push过程中提示我：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image22.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image22.png)  
 
 这是因为没有设置用户名的原因，修改当前目录下的 .git/config文件  
 
@@ -291,7 +291,7 @@ push过程中提示我：
 
 当push完成后，我们来访问[https://mcace.github.io/](https://mcace.github.io/)，就可以看到效果啦！如果暂时还没有效果，那么可以稍微等待一会！  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image23.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image23.png)  
 
 ## 六、Yummy-Jekyll配置
 
@@ -301,11 +301,11 @@ push过程中提示我：
 
 首先在仓库里找到_config.yml这个文件，它在根目录下，很快就可以找到：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image24.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image24.png)  
 
 接下来点击右边的编辑按钮：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image25.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image25.png)  
 
 这一部分要修改的主要是Site settings部分，里面已经有作者的注释了，内容就不详述了。其中要提一下的有：  
 
@@ -416,11 +416,11 @@ skill_web_keywords: [HTML, CSS, JS, JQuery, Ajax, MongoDB]
 
 最后修改完成后，页面拉到底部，点击Commit changes按钮：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image26.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image26.png)  
 
 提交后，稍微等几秒，再刷新我们的个人页面，就可以看到修改了：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image27.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image27.png)  
 
 最后我们将修改后的代码拉回到仓库：  
 
@@ -441,7 +441,7 @@ cd /mnt/hgfs/blog/mcace.github.io
 
 然后修改_config.yml文件的url项，这里我直接在Win系统下进行修改了，我是在虚拟机里运行的Linux系统，使用NAT模式联网，这里就设置为虚拟机的局域网IP地址，虚拟机的IP地址可以使用ifconfig进行查看，如果你本身就是Linux系统，那么使用http://localhost:4000或http://127.0.0.1:4000或http://本机IP:4000即可。  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image28.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image28.png)  
 
 因为上传到Github上的url必须是你个人仓库的地址或你的域名，但本机调试url必须是本地地址，因此你每次上传_config.yml文件时，都要仔细看看url项的配置，如果只是为了本地调试而修改该文件，那么就不要再推送该文件了。  
 
@@ -457,7 +457,7 @@ vim /etc/sysconfig/iptables
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 4000 -j ACCEPT
 ```
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image29.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image29.png)  
 
 下面在博客目录下使用jekyll命令打开服务器  
 
@@ -465,7 +465,7 @@ vim /etc/sysconfig/iptables
 jekyll server -w --host=192.168.249.130
 ```
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image30.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image30.png)  
 
 这里的-w表示Jekyll服务器会监视新文件的改动，比如有新的博文进来，那么Jekyll就会自动生成相关文件，但如果是修改了_config.yml文件，那么就要重新运行Jekyll服务器了。  
 
@@ -475,15 +475,15 @@ jekyll server -w --host=192.168.249.130
 
 现在在宿主机上访问http://192.168.249.130:4000，就能访问到博客页面了！  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image31.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image31.png)  
 
 下面我们再来看到博客目录下，可以看到多出了一个_site的目录，点进去里面就是生成的静态站点。  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image33.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image33.png)  
 
 关于这个_site目录，我们可以看一下_config.yml文件，其中有source和destination配置如下：  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image32.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image32.png)  
 
 source就表示我们生成静态站点的素材所在的目录，这里是当前目录下的所有文件。  
 
@@ -506,9 +506,9 @@ echo _site > .gitignore
 
 如果你用了Github Desktop，那么就按下面步骤添加即可  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image34.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image34.png)  
 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image35.png)  
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image35.png)  
 
 到这里Jekyll Server调试就讲完了，下面我们来初步个性化我们的模板，因为我使用了虚拟机共享文件夹，因此这一步我将不再在Linux下操作。  
 
@@ -553,15 +553,15 @@ echo _site > .gitignore
 #### 同时我再介绍一些Markdown语法
 
 -   首先是最重要的换行，在段落内换行时，单纯的回车换行是不行的，必须在每行末尾处增加至少两个空格才能实现换行。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image49.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image49.png)
 -   如果想实现两段文字中产生分段的效果，只要在两行文字中空一行即可实现。 
-![](http://mcace.me/assets/images/2018/use-github-pages/Image50.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image50.png)
 -   接着是和本段文字类似的列表，在列表每项前增加"-"、"+"或"*"再接三个空格即可。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image51.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image51.png)
 -   如果需要带数字的列表，则可以使用'1.'接一个空格来创建。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image52.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image52.png)
 -   如果需要输入代码，那么可以在代码首尾两行用四个空格或\`\`\`包围即可，使用\`\`\`包围代码时，可以在首行的\`\`\`后指定代码格式进行高亮，比如\```java，但是代码能不能高亮要看markdown支持的实际情况。  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image53.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image53.png)
 -   如果要输入一段引用内容，可以使用'>'再接文字，比如下面这段就是`>测试文本`输入的。
    >测试文本
 
@@ -606,7 +606,7 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 3. 安装完成后，查看菜单栏的[文件] /[File]下是否存在[New File(SublimeTmpl)]选项，如果没有就重启Sublime Text 3再看。
 
 安装成功后如图：  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image45.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image45.png)
 
 下面我们来添加模板文件：    
 
@@ -633,11 +633,11 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 }
 ```
 修改后内容如图：  
-![](http://mcace.me/assets/images/2018/use-github-pages/Image46.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image46.png)
 6. 修改完成后，在菜单中就可以看到我们设置的模板了，点击后就是我们设置的模板：    
-![](http://mcace.me/assets/images/2018/use-github-pages/Image47.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image47.png)
 7. 为了不使Jekyll在生成站点时因为时间设置导致错误，我们必须在生成的时间中添加时区信息，在插件目录中找到`SublimeTmpl.sublime-settings`文件，在`date_format`节点数据末尾添加" +0800"，如图：
-![](http://mcace.me/assets/images/2018/use-github-pages/Image48.png)
+![]({{ site.url }}/assets/images/2018/use-github-pages/Image48.png)
 
 到这里基本上就完成了模板的创建，另外关于SublimeTmpl的使用主要是参考博文：[Sublime Text tmpl插件快速生成md文件YAML头](http://www.shaoguoji.cn/2016/02/20/Sublime_Text_pakage_generate_md_file_YAML_head_information/)，这里还提供了设置创建新文件的快捷键的方法，你可以参考一下。
 
@@ -661,5 +661,5 @@ __注意Jekyll使用的md文件名，格式必须为[yyyy-mm-dd-title.md]__
 
 __另外需要注意：博文第一行会作为预览显示在博客网站的博文目录里，所以大家第一句一定要简单概括一下文章内容，不要上来就一整段主要内容！__
 
-###### 至此，整篇文章也就算结束了吧，其中肯定会有不足之处，还望大家多多包含，不吝赐教，另外也请关注我的另一篇Github Pages博客相关的博文：[配置域名到Github Pages](http://mcace.me/github-pages/建站/2018/06/17/use-domain-for-github-pages.html)，该文以GoDaddy上购买的域名配置到Github Pages博客页面为例介绍域名配置。
+###### 至此，整篇文章也就算结束了吧，其中肯定会有不足之处，还望大家多多包含，不吝赐教，另外也请关注我的另一篇Github Pages博客相关的博文：[配置域名到Github Pages]({{ site.url }}/github-pages/建站/2018/06/17/use-domain-for-github-pages.html)，该文以GoDaddy上购买的域名配置到Github Pages博客页面为例介绍域名配置。
 ##### 最后非常感谢您的阅读！

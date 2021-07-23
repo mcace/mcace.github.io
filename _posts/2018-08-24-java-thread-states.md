@@ -8,7 +8,7 @@ tags: [Java并发]
 
 Java线程有多种状态，状态之间的转换也是有多种方式，本文用图解方式来说明Java线程状态转换的过程。
 
-![](http://mcace.me/assets/images/2018/java-thread-states/image1.jpg)
+![]({{ site.url }}/assets/images/2018/java-thread-states/image1.jpg)
 
 需要注意以下几点：
 

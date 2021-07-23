@@ -14,7 +14,7 @@ tags: [spring-boot]
 
 弹出的窗口中选择`[Spring Initializr]`项，如下图：
 
-![](http://mcace.me/assets/images/2018/idea-spring-initializr/1.jpg)
+![]({{ site.url }}/assets/images/2018/idea-spring-initializr/1.jpg)
 
 可见默认是通过Spring官网的[https://start.spring.io/](https://start.spring.io/)来进行Spring-Boot项目构建的。
 
@@ -22,18 +22,18 @@ tags: [spring-boot]
 
 由于Spring-Boot最低支持的JDK就是1.8了，所以这里设置为1.8。然后进入下一个界面。
 
-![](http://mcace.me/assets/images/2018/idea-spring-initializr/2.jpg)
+![]({{ site.url }}/assets/images/2018/idea-spring-initializr/2.jpg)
 
 这里大部分东西看一眼就能了解是干什么的，其中需要说明的是`[Type]`项是你想创建一个基于哪个构建工具建立的项目，有Maven和Gradle，同时可以选择`[Generate a Maven(Gradle) based project archive]`，或是`[Generate a Maven pom.xml]`，前者是会创建一个附带Maven(Gradle)默认目录结构的项目，后者只是创建一个附带pom.xml(Gradle配置文件)的空项目，我们保持它默认就行。
 
 在这里配置好你的Group、Artifact等内容，进入下一界面。
 
-![](http://mcace.me/assets/images/2018/idea-spring-initializr/3.jpg)
+![]({{ site.url }}/assets/images/2018/idea-spring-initializr/3.jpg)
 
 该界面用于增加各个Spring-Boot集成模块，同时在右上角可以指定Spring-Boot版本，没有什么太多需要介绍的，按需添加就好！
 
 下一界面就是传统的指定存放目录界面了，选择好存放位置后，Finish即可。
 
-![](http://mcace.me/assets/images/2018/idea-spring-initializr/4.jpg)
+![]({{ site.url }}/assets/images/2018/idea-spring-initializr/4.jpg)
 
 现在一个Spring-Boot项目就创建完成了，我们可以看到Idea内嵌的Spring-Boot构建器使用的还是Spring官方提供的Web工具来进行构建，通过这个构建器，我们可以在IDE内部创建Spring-Boot项目，而不需要再使用Web工具创建、下载、导入IDE这么繁琐的步骤了，可以说是非常的方便。

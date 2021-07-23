@@ -18,7 +18,7 @@ B树(B-tree，又名B-树，B-树===B树，不存在“B减树”)，又名Balan
 
 我们先来看一张B树的示例图，对照图片，认识B树的特性：
 
-![](http://mcace.me/assets/images/2019/mysql-index/8.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/8.jpg)
 
 B树有几个特性：
 
@@ -60,7 +60,7 @@ B树有几个特性：
 
 这里盗用文章[MySQL索引背后的数据结构及算法原理](http://blog.codinglabs.org/articles/theory-of-mysql-index.html)的一张图来说明这个情况：
 
-![](http://mcace.me/assets/images/2019/mysql-index/7.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/7.jpg)
 
 于是就会有一个问题，数据越来越多，索引表也越来越大，一次将索引全部加载到内存中再进行查找，是十分浪费内存空间的一种低效率的行为，而多次加载又涉及到多次IO，和B树对比就显得很差了。
 
@@ -98,7 +98,7 @@ B树有几个特性：
 
 就这么简单地变动，使得B+树在存储索引方面比B树更加出色，我们来看一下B+树的示例图：
 
-![](http://mcace.me/assets/images/2019/mysql-index/9.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/9.jpg)
 
 B+树除了能索引更多数据节点外，还有一些其他特性：
 
@@ -137,7 +137,7 @@ B+树除了能索引更多数据节点外，还有一些其他特性：
 
 下面是一个InnoDB聚集索引实现的示意图：
 
-![](http://mcace.me/assets/images/2019/mysql-index/14.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/14.jpg)
 
 可以看到叶子节点包含了完整的数据，非叶子节点则只有键和页指针，并且页与页之间通过双向链表连接起来。
 
@@ -153,7 +153,7 @@ InnoDB的聚集索引有如下几个特性：
 
 下面来验证InnoDB创建的隐藏字段"GEN_CLUST_INDEX"，首先创建一个InnoDB表，定义主键id：
 
-![](http://mcace.me/assets/images/2019/mysql-index/17.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/17.jpg)
 
 查看InnoDB的索引，查看SQL如下：
 
@@ -174,11 +174,11 @@ AND f.INDEX_ID = i.INDEX_ID
 
 结果如图：
 
-![](http://mcace.me/assets/images/2019/mysql-index/19.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/19.jpg)
 
 接着将主键取消掉，这时InnoDB会自动创建一个隐藏字段"GEN_CLUST_INDEX"，并创建相关的索引，由于该字段不会出现在INNODB_SYS_FIELDS表中，因此将该表查询相关语句去掉后，结果如下图：
 
-![](http://mcace.me/assets/images/2019/mysql-index/20.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/20.jpg)
 
 验证结束，InnoDB确实创建了这个隐藏字段。
 
@@ -200,7 +200,7 @@ MyISAM没有聚集的概念，它的数据存储方式永远不会受索引控�
 
 下面是一个MyISAM的主键索引（这里我盗图了），以列col1作为主键：
 
-![](http://mcace.me/assets/images/2019/mysql-index/10.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/10.jpg)
 
 可以看到，叶子节点存放的数据是真实数据的地址。
 
@@ -208,19 +208,19 @@ MyISAM没有聚集的概念，它的数据存储方式永远不会受索引控�
 
 下面我们创建一张以MyISAM为引擎的表，并且插入2000条数据，观察生成的文件：
 
-![](http://mcace.me/assets/images/2019/mysql-index/12.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/12.jpg)
 
-![](http://mcace.me/assets/images/2019/mysql-index/13.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/13.jpg)
 
 其中MYD文件是表空间数据文件，MYI文件是表空间索引文件。
 
 接着我们在name上创建索引，观察MYI文件大小变化来验证索引保存在MYI文件中：
 
-![](http://mcace.me/assets/images/2019/mysql-index/15.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/15.jpg)
 
 前面说了InnoDB表会强制使用聚集索引，但MyISAM表并不强制使用索引，当我取消主键并删除索引后，MYI文件大小变成下面这样：
 
-![](http://mcace.me/assets/images/2019/mysql-index/16.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/16.jpg)
 
 ### 辅助索引(Secondary Indexes)
 
@@ -241,7 +241,7 @@ _有的文章把MyISAM的Primary Key和Secondary Key称为主索引和辅助索�
 
 下图左半部分展示了一个辅助索引的示例：
 
-![](http://mcace.me/assets/images/2019/mysql-index/21.jpg)
+![]({{ site.url }}/assets/images/2019/mysql-index/21.jpg)
 
 _这里有一个我也暂时没办法解答的问题，就是创建辅助索引时，是按照什么样的规则对字段进行排序的？比如int类型可以由大到小，单个字符可以按照字的字节码排序，那如果复杂一点，一个长度不定的字符数组，比如"abcd""c""fgh"，又是怎样排序的？甚至对于变长类型，一个长度为1的字符和长度为500、800甚至1000的字符，又是怎么排序的？这个问题我暂时没有答案。_
 

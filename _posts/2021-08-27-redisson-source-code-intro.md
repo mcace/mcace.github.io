@@ -1,0 +1,50 @@
+# Redisson源码设计初探
+
+
+## 基础体系
+
+RedissonClient
+调用方体系
+
+RedissonObject
+Redis对象体系
+
+CommandExecutor
+Redis命令执行体系
+
+CommandExecutor是执行方，RedissonObject是抽象的要执行的命令|业务|工具，RedissonClient是构建RedissonObject的调用方，RedissonClient提供了所有构建RedissonObject的方法。
+基本流程是RedissonClient创建时，采用has a CommandExecutor方式构建。需要执行命令时，通过RedissonClient创建对应的RedissonObject，同时传入CommandExecutor，RedissonObject内部构建好Redis指令及实现具体的业务逻辑，然后通过CommandExecutor连接redis执行命令。
+
+## 使用举例
+
+举例说明：
+欲实现一个自增长的id
+
+涉及的RedissonObject：RedissonAtomicLong
+
+流程：
+1. 使用Redisson.create()创建RedissonClient对象（接口，只有一个实现类Redisson）
+2. 使用RedissonClient的getAtomicLong()方法创建RAtomicLong对象（接口，只有一个实现类RedissonAtomicLong）
+3. 调用RedissonAtomicLong的addAndGet()，获取自增id当前值
+
+## RedissonObject体系简介
+
+### 简介
+RedissonObject为基础概念，所有对key的操作都视为RedissonObject，它更像是一种利用redis构建的工具类，比如分布式锁、原子性数字（当然Redisson也提供了对），同时所有操作均有异步及同步两个接口，关系一般为同步接口扩展异步接口。
+RedissonObject都实现了RObjectAsync接口，大部分RedissonObject还另外定义了其专属的接口，如RedissonAtomicLong，就在实现RObjectAsync外，还实现了RAtomicLong及RAtomicLongAsync，其中RAtomicLong扩展了RAtomicLongAsync，也遵从上面所述的“所有操作均有异步及同步两个接口，关系一般为同步接口扩展异步接口”。
+同时划分了RObject及RExpirable两个体系，RExpirable扩展RObject，各个RedissionObject可以自行选择实现RObject或RExpirable，如果是后者，那么表示该RObject支持存活时间的操作。
+所有RedissonObject都可以通过RedissonClient构建，所有RedissonObject构建时都依赖CommandExecutor。
+
+### 基础类+接口
+接口
+RObjectAsync:定义了所有对key的基础操作，比如rename，unlink，delete，restore，获取key闲置时间等，采用异步方式，方法返回RFuture
+RObject:基本方法与RObjectAsync一致，只不过都是同步操作，可以直接获取命令执行结果
+RExpirableAsync:定义了与key存活时间的所有相关操作，所有方法均为异步方式，返回RFuture<Boolean>，扩展了RObjectAsync接口
+RExpirable:基本方法与RExpirableAsync一致，只不过都是同步操作，可以直接获取命令执行结果，扩展了RObject接口
+
+类
+RedissonObject:实现了所有RObjectAsync及RObject接口定义的方法，是所有RedissonObject的父类
+RedissonExpirable:实现了所有RExpirableAsync与RExpirable接口定义的方法
+
+实现类
+RedissonXXXX:大部分定义了操作接口，命名规则为RXxxxxAsnyc或RXxxxx，比如RAtomicLong及RAtomicLongAsync，实现类为ResissonAtomicLong；大部分RedissonXXXX继承自RedissonExpirable，也就是说它们既有RedissonObject中对key的基本操作，也包含了对key存活时间的操作

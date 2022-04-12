@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/flori/json.git
+  remote: https://github.com/flori/json.git
   revision: 7f4cfd853f2c919d854fb95548a19980feff17e8
   branch: v1.8
   specs:
@@ -108,11 +108,12 @@ GEM
     mercenary (0.3.6)
     middleware (0.1.0)
     mini_mime (1.0.2)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.8.0)
     minitest (5.14.0)
     multipart-post (2.1.1)
-    nokogiri (1.10.9)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.4)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     octokit (4.18.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -124,6 +125,7 @@ GEM
       thor
       thread_safe
     public_suffix (4.0.4)
+    racc (1.6.0)
     rack (1.6.13)
     rack-test (0.6.3)
       rack (>= 1.0)
